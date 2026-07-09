@@ -1,0 +1,346 @@
+@font-face {
+    font-family: 'face';
+    src: url('/static/fonts/TitilliumWeb-Regular.ttf') format('truetype');
+}
+
+/* PREDEFINED */
+
+:root {
+    font-size: 16px;
+    --bigscreen: 10rem;
+    --smallscreen: 3rem;
+    --text-primary: gray;
+    --text-secondary: pink;
+    --bg-primary: gray;
+    --bg-secondary: pink;
+    --transition-speed: 500ms;
+    --col-gap: 0;
+}
+
+body {
+    font-family: 'face', sans-serif;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    overflow-x: hidden;
+}
+
+*{
+    list-style: none;
+    text-decoration: none;
+}
+
+/* CUSTOM SCROLLBAR */
+
+body::-webkit-scrollbar {
+    width: 1rem;
+}
+
+body::-webkit-scrollbar-track {
+    background: darkgray;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: rgba(216, 150, 168, 0.8);
+}
+
+/* MAIN CSS */
+
+.main {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar {
+    position: fixed;
+    width: 100vw;
+    height: 3rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(5px);
+    border: 3px solid #f8d0e0;
+}
+
+.nav-logo-img {
+    height: 3rem;
+    width: 3rem;
+}
+
+.nav-links a {
+    color: white;
+}
+
+
+.nav-btn {
+    color: white;
+    border: 3px solid #f8d0e0;
+    border-radius: 50px;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.nav-btn:hover {
+    background-color: #f8d0e0;
+    color: #2d2d2d;
+    border: 3px solid #5c3b48;
+    transition: 0.3s;
+}
+
+
+/* MELETIAI LANDING PAGE MEDIA QUERIES */
+
+@media only screen and (min-width: 601px) {
+
+    .nav-logo {
+        min-width: 5rem;
+    }
+}
+
+@media only screen and (max-width: 600px) {}
+
+/* MELETIAI STRAPPED LAYOUTS */
+
+[class^="col-"] {
+    padding-left: var(--col-gap);
+    padding-right: var(--col-gap);
+    box-sizing: border-box;
+}
+
+.col-1 {
+    width: 8.333333%;
+}
+
+.col-2 {
+    width: 16.666666%;
+}
+
+.col-3 {
+    width: 25%;
+}
+
+.col-4 {
+    width: 33.333333%;
+}
+
+.col-5 {
+    width: 41.666666%;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+.col-7 {
+    width: 58.333333%;
+}
+
+.col-8 {
+    width: 66.666666%;
+}
+
+.col-9 {
+    width: 72.999999%;
+}
+
+.col-10 {
+    width: 83.333333%;
+}
+
+.col-11 {
+    width: 91.666666%;
+}
+
+.col-12 {
+    width: 100%;
+}
+
+[class*="row-cols-"]>.col {
+    flex-grow: 0;
+}
+
+.row-cols-1>.col {
+    width: 100%;
+}
+
+.row-cols-2>.col {
+    width: 50%;
+}
+
+.row-cols-3>.col {
+    width: 33.333333%;
+}
+
+.row-cols-4>.col {
+    width: 25%;
+}
+
+.row-cols-5>.col {
+    width: 20%;
+}
+
+.row-cols-6>.col {
+    width: 16.666666%;
+}
+
+@media screen and (max-width: 600px) {
+
+    .col-md-1 {
+        width: 8.333333%;
+    }
+
+    .col-md-2 {
+        width: 16.666666%;
+    }
+
+    .col-md-3 {
+        width: 25%;
+    }
+
+    .col-md-4 {
+        width: 33.333333%;
+    }
+
+    .col-md-5 {
+        width: 41.666666%;
+    }
+
+    .col-md-6 {
+        width: 50%;
+    }
+
+    .col-md-7 {
+        width: 58.333333%;
+    }
+
+    .col-md-8 {
+        width: 66.666666%;
+    }
+
+    .col-md-9 {
+        width: 72.999999%;
+    }
+
+    .col-md-10 {
+        width: 83.333333%;
+    }
+
+    .col-md-11 {
+        width: 91.666666%;
+    }
+
+    .col-md-12 {
+        width: 100%;
+    }
+
+    .row-cols-md-1>.col {
+        width: 100%;
+    }
+
+    .row-cols-md-2>.col {
+        width: 50%;
+    }
+
+    .row-cols-md-3>.col {
+        width: 33.333333%;
+    }
+
+    .row-cols-md-4>.col {
+        width: 25%;
+    }
+
+    .row-cols-md-5>.col {
+        width: 20%;
+    }
+
+    .row-cols-md-6>.col {
+        width: 16.666666%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+
+    .col-xl-1 {
+        width: 8.333333%;
+    }
+
+    .col-xl-2 {
+        width: 16.666666%;
+    }
+
+    .col-xl-3 {
+        width: 25%;
+    }
+
+    .col-xl-4 {
+        width: 33.333333%;
+    }
+
+    .col-xl-5 {
+        width: 41.666666%;
+    }
+
+    .col-xl-6 {
+        width: 50%;
+    }
+
+    .col-xl-7 {
+        width: 58.333333%;
+    }
+
+    .col-xl-8 {
+        width: 66.666666%;
+    }
+
+    .col-xl-9 {
+        width: 72.999999%;
+    }
+
+    .col-xl-10 {
+        width: 83.333333%;
+    }
+
+    .col-xl-11 {
+        width: 91.666666%;
+    }
+
+    .col-xl-12 {
+        width: 100%;
+    }
+
+    .row-cols-xl-1>.col {
+        width: 100%;
+    }
+
+    .row-cols-xl-2>.col {
+        width: 50%;
+    }
+
+    .row-cols-xl-3>.col {
+        width: 33.333333%;
+    }
+
+    .row-cols-xl-4>.col {
+        width: 25%;
+    }
+
+    .row-cols-xl-5>.col {
+        width: 20%;
+    }
+
+    .row-cols-xl-6>.col {
+        width: 16.666666%;
+    }
+
+    .d-xl-inline-block {
+        display: inline-block;
+    }
+}

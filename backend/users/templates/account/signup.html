@@ -1,0 +1,142 @@
+{% extends "account/base_entrance.html" %}
+{% load i18n %}
+{% load allauth %}
+{% load allauth account %}
+{% load socialaccount %}
+{% get_providers as socialaccount_providers %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/users/login-signup-style.css' %}">
+<script type="text/javascript" src="{% static 'js/login-signup-script.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+{% endblock head %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock head_title %}
+
+{% block body %}
+<div class="page">
+    <div class="container">
+
+        <div class="left">
+            <div class="back-btn"><a href="{% url 'home' %}" class="back-btn">&#8249;</a></div>
+            <div class="heading-text">{% trans "Sign Up" %}</div>
+            <div class="eula">Already have an account? <a href="{{ login_url }}">Sign in</a></div>
+        </div>
+
+        <div class="middle-signup">
+            <div class="messages">
+                {% if form.signup.errors %}
+                <div class="form-error">{{ form.signup.errors }}</div>
+                {% endif %}
+
+                {% if form.password.errors %}
+                <div class="form-error">{{ form.password.errors }}</div>
+                {% endif %}
+
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <div class="form-error">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <form method="post" action="{% url 'account_signup' %}" class="form">
+                {% csrf_token %}
+
+                <div class="form-field">
+                    <label for="id_username">Username</label>
+                    <input type="text" name="username" id="id_username" class="snake-input" 
+                           placeholder="Enter your username" autocomplete="username" 
+                           value="{{ form.username.value|default:'' }}" required>
+                    {% if form.username.errors %}
+                    <div class="field-error">{{ form.username.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Email Field -->
+                <div class="form-field">
+                    <label for="id_email">Email</label>
+                    <input type="email" name="email" id="id_email" class="snake-input" 
+                           placeholder="Enter your email" autocomplete="email" 
+                           value="{{ form.email.value|default:'' }}" required>
+                    {% if form.email.errors %}
+                    <div class="field-error">{{ form.email.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-field">
+                    <label for="id_password1">Password</label>
+                    <input type="password" name="password1" id="id_password1" class="snake-input" 
+                           placeholder="Enter your password" autocomplete="new-password" required>
+                    {% if form.password1.errors %}
+                    <div class="field-error">{{ form.password1.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Password Confirmation Field -->
+                <div class="form-field">
+                    <label for="id_password2">Confirm Password</label>
+                    <input type="password" name="password2" id="id_password2" class="snake-input" 
+                           placeholder="Confirm your password" autocomplete="new-password" required>
+                    {% if form.password2.errors %}
+                    <div class="field-error">{{ form.password2.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                {{ redirect_field }}
+
+                <div class="submit">
+                    <button type="submit" id="submit" class="super-button">
+                        <span>SIGN IN</span>
+                        <svg fill="none" viewBox="0 0 24 24" class="arrow">
+                            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor"
+                                d="M5 12h14M13 6l6 6-6 6"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="right">
+            {% if LOGIN_BY_CODE_ENABLED or PASSKEY_LOGIN_ENABLED %}
+            {% element hr %}
+            {% endelement %}
+            {% element button_group vertical=True %}
+            {% if PASSKEY_LOGIN_ENABLED %}
+            {% element button type="submit" form="mfa_login" id="passkey_login" tags="prominent,login,outline,primary"%}
+            {% trans "Sign in with a passkey" %}
+            {% endelement %}
+            {% endif %}
+            {% if LOGIN_BY_CODE_ENABLED %}
+            {% element button href=request_login_code_url tags="prominent,login,outline,primary" %}
+            {% trans "Send me a sign-in code" %}
+            {% endelement %}
+            {% endif %}
+            {% endelement %}
+            {% endif %}
+
+            <div class="form-google">
+                <h4>Or Sign in With</h4>
+                    {% if SOCIALACCOUNT_ENABLED %}
+                    {% load socialaccount %}
+                    <div class="google-login-section">
+                        <form action="{% provider_login_url 'google' %}" method="post" class="google-login-form">
+                            {% csrf_token %}
+                            <button type="submit" class="login-with-google-btn">
+                                Sign in with Google
+                            </button>
+                        </form>
+                    </div>
+                    {% endif %}
+                    {% endblock body %}
+                </button>
+                {% block extra_body %}
+                {% if PASSKEY_LOGIN_ENABLED %}
+                {% include "mfa/webauthn/snippets/login_script.html" with button_id="passkey_login" %}
+                {% endif %}
+                {% endblock extra_body %}
+            </div>
+        </div>
+    </div>
+</div>

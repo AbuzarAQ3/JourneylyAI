@@ -1,0 +1,65 @@
+/* @font-face {
+    font-family: 'face';
+    src: url('/static/fonts/TitilliumWeb-Regular.ttf') format('truetype');
+}
+
+:root {
+    font-size: 16px;
+    --bigscreen: 10rem;
+    --smallscreen: 3rem;
+    --pri: #EADEDA;
+    --sec: #50394c;
+    --ter: #f4e1d2;
+    --qua: #b2b2b2;
+    --transition-speed: 500ms;
+    --col-gap: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--qua);
+}
+
+body::-webkit-scrollbar-thumb {
+    background: var(--sec);
+}
+
+body {
+    font-family: 'face', sans-serif;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    overflow-x: hidden;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.navbar{
+    height: 5rem;
+    width: 100%;
+    background-color: var(--pri);
+}
+
+.card {
+    background-color: var(--qua);
+    height: 100vh;
+    width: 100vw;
+    border-radius: 2rem;
+}
+
+#map {
+    height: 200px;
+    width: 200px;
+} */

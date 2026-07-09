@@ -1,0 +1,440 @@
+@font-face {
+    font-family: 'face';
+    src: url('/static/fonts/TitilliumWeb-Regular.ttf') format('truetype');
+}
+/*
+:root {
+    font-size: 16px;
+    --bigscreen: 10rem;
+    --smallscreen: 3rem;
+    --text-pri: #EADEDA;
+    --text-sec: #50394c;
+    --text-ter: #f4e1d2;
+    --text-qua: #b2b2b2;
+    --bg-pri: #EADEDA;
+    --bg-sec: #50394c;
+    --bg-ter: #f4e1d2;
+    --bg-qua: #b2b2b2;
+    --transition-speed: 500ms;
+    --col-gap: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--bg-qua);
+}
+
+body::-webkit-scrollbar-thumb {
+    background: var(--bg-sec);
+}
+
+body {
+    font-family: 'face', sans-serif;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    overflow-x: hidden;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.c1 {
+    width: 100%;
+    height: 125vh;
+    position: relative;
+}
+
+.c1-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.c1-text {
+    height: 40vh;
+    width: 40%;
+    position: fixed;
+    top: 25%;
+    margin-left: 3rem;
+}
+
+.c1-heading {
+    display: flex;
+    font-weight: bold;
+    font-size: 5vw;
+    color: white;
+    text-shadow: 1px 1px 10px black;
+}
+.c1-sub-heading {
+    font-size: 2vw;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}
+
+.c1-nav {
+    position: fixed;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    align-self: start;
+    z-index: 5;
+    width: 100%;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(5px);
+}
+
+.nav-logo {
+    width: 60px;
+}
+
+.c1-nav ul li {
+    list-style: none;
+    display: inline-block;
+    margin: 0 25px;
+    position: relative;
+    letter-spacing: 2px;
+}
+
+.c1-nav ul li a {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    text-shadow: 1px 1px black;
+}
+
+.c1-nav ul li::after {
+    content: '';
+    height: 3px;
+    width: 0%;
+    background: #b2b2b2;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.3s;
+}
+
+.c1-nav ul li:hover::after {
+    width: 100%;
+}
+
+.nav-btn1 {
+    color: white;
+    border: 3px solid var(--bg-sec);
+    border-radius: 50px;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.nav-btn1:hover {
+    border: 3px solid var(--bg-pri);
+    transition: 0.3s;
+}
+
+.c2 {
+    background: linear-gradient(0deg, #f9f9f9, #d4dad6, #afbbb6, #8b9d9b, #698083, #49636f, #2c475c, #142b4e);
+    background: gray;
+    display: flex;
+    flex-direction: column;
+    height: 25vh;
+    width: 100%;
+}
+
+.c3 {
+    width: 100%;
+    height: 100%;
+}
+
+.c4 {
+    margin: 25px 50px 0 25px;
+}
+
+.c5 {
+    position: relative;
+    height: 100%;
+}
+
+ */
+body {
+    font-family: 'face', sans-serif;
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.illustration {
+    background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+}
+
+.cozy-shadow {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* JOURNEYLYAI LAYOUT */
+
+[class^="col-"] {
+    padding-left: var(--col-gap);
+    padding-right: var(--col-gap);
+    box-sizing: border-box;
+}
+
+.col-1 {
+    width: 8.333333%;
+}
+
+.col-2 {
+    width: 16.666666%;
+}
+
+.col-3 {
+    width: 25%;
+}
+
+.col-4 {
+    width: 33.333333%;
+}
+
+.col-5 {
+    width: 41.666666%;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+.col-7 {
+    width: 58.333333%;
+}
+
+.col-8 {
+    width: 66.666666%;
+}
+
+.col-9 {
+    width: 72.999999%;
+}
+
+.col-10 {
+    width: 83.333333%;
+}
+
+.col-11 {
+    width: 91.666666%;
+}
+
+.col-12 {
+    width: 100%;
+}
+
+[class*="row-cols-"]>.col {
+    flex-grow: 0;
+}
+
+.row-cols-1>.col {
+    width: 100%;
+}
+
+.row-cols-2>.col {
+    width: 50%;
+}
+
+.row-cols-3>.col {
+    width: 33.333333%;
+}
+
+.row-cols-4>.col {
+    width: 25%;
+}
+
+.row-cols-5>.col {
+    width: 20%;
+}
+
+.row-cols-6>.col {
+    width: 16.666666%;
+}
+
+@media screen and (min-width: 768px) {
+    .container {
+        max-width: 768px;
+    }
+
+    .col-md-1 {
+        width: 8.333333%;
+    }
+
+    .col-md-2 {
+        width: 16.666666%;
+    }
+
+    .col-md-3 {
+        width: 25%;
+    }
+
+    .col-md-4 {
+        width: 33.333333%;
+    }
+
+    .col-md-5 {
+        width: 41.666666%;
+    }
+
+    .col-md-6 {
+        width: 50%;
+    }
+
+    .col-md-7 {
+        width: 58.333333%;
+    }
+
+    .col-md-8 {
+        width: 66.666666%;
+    }
+
+    .col-md-9 {
+        width: 72.999999%;
+    }
+
+    .col-md-10 {
+        width: 83.333333%;
+    }
+
+    .col-md-11 {
+        width: 91.666666%;
+    }
+
+    .col-md-12 {
+        width: 100%;
+    }
+
+    .row-cols-md-1>.col {
+        width: 100%;
+    }
+
+    .row-cols-md-2>.col {
+        width: 50%;
+    }
+
+    .row-cols-md-3>.col {
+        width: 33.333333%;
+    }
+
+    .row-cols-md-4>.col {
+        width: 25%;
+    }
+
+    .row-cols-md-5>.col {
+        width: 20%;
+    }
+
+    .row-cols-md-6>.col {
+        width: 16.666666%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+    }
+
+    .col-xl-1 {
+        width: 8.333333%;
+    }
+
+    .col-xl-2 {
+        width: 16.666666%;
+    }
+
+    .col-xl-3 {
+        width: 25%;
+    }
+
+    .col-xl-4 {
+        width: 33.333333%;
+    }
+
+    .col-xl-5 {
+        width: 41.666666%;
+    }
+
+    .col-xl-6 {
+        width: 50%;
+    }
+
+    .col-xl-7 {
+        width: 58.333333%;
+    }
+
+    .col-xl-8 {
+        width: 66.666666%;
+    }
+
+    .col-xl-9 {
+        width: 72.999999%;
+    }
+
+    .col-xl-10 {
+        width: 83.333333%;
+    }
+
+    .col-xl-11 {
+        width: 91.666666%;
+    }
+
+    .col-xl-12 {
+        width: 100%;
+    }
+
+    .row-cols-xl-1>.col {
+        width: 100%;
+    }
+
+    .row-cols-xl-2>.col {
+        width: 50%;
+    }
+
+    .row-cols-xl-3>.col {
+        width: 33.333333%;
+    }
+
+    .row-cols-xl-4>.col {
+        width: 25%;
+    }
+
+    .row-cols-xl-5>.col {
+        width: 20%;
+    }
+
+    .row-cols-xl-6>.col {
+        width: 16.666666%;
+    }
+
+    .d-xl-inline-block {
+        display: inline-block;
+    }
+}

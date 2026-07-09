@@ -1,0 +1,61 @@
+# Python
+venv/
+venv-win/
+venv-ub/
+venv-linux/
+venv-*/
+env/
+.venv/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Database
+*.sqlite3
+*.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Frontend (if you have React/Vue in same repo)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+/build
+/dist
+
+# Logs
+*.log
+
+# Static/Media (local development)
+media/
+staticfiles/
+
+# Docker
+*.pid
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OS
+Thumbs.db
+Desktop.ini

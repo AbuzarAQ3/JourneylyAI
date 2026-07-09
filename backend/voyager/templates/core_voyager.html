@@ -1,0 +1,158 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyager</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="navbar"></div>
+        <div class="card">
+            <div id="map">
+            </div>
+        </div>
+        <div class="card"></div>
+        <div class="card"></div>
+    </div>
+
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+        L.tileLayer('https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}.png?key=27ePJsZ0SKxvBPmjcbEx',
+            {
+                attribution: '<a href="https://www.maptiler.com/copyright/"target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+            }).addTo(map);
+    </script>
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyager</title>
+
+    <!-- Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Wrapped CSS in <style> tags -->
+    <style>
+        @font-face {
+            font-family: 'face';
+            src: url('/static/fonts/TitilliumWeb-Regular.ttf') format('truetype');
+        }
+
+        :root {
+            font-size: 16px;
+            --bigscreen: 10rem;
+            --smallscreen: 3rem;
+            --pri: #EADEDA;
+            --sec: #50394c;
+            --ter: #f4e1d2;
+            --qua: #b2b2b2;
+            --transition-speed: 500ms;
+            --col-gap: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: var(--qua);
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: var(--sec);
+        }
+
+        body {
+            font-family: 'face', sans-serif;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+            overflow-x: hidden;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            height: auto;
+        }
+
+        .navbar {
+            height: 5rem;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: var(--pri);
+            z-index: 1000; /* Keeps navbar on top of the map */
+        }
+
+        .card {
+            background-color: var(--qua);
+            height: 100vh;
+            width: 100vw;
+            border-radius: 2rem;
+            box-sizing: border-box;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Push the very first card down so it isn't hidden under the fixed navbar */
+        .main .card:first-of-type {
+            margin-top: 6rem; 
+        }
+
+        /* Expanded map dimensions so it is visibly open in the card */
+        #map {
+            height: 80vh;
+            width: 100%;
+            border-radius: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="navbar"></div>
+        <div class="card">
+            <div id="map"></div>
+        </div>
+        <div class="card"></div>
+        <div class="card"></div>
+    </div>
+
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+        
+        // FIXED: Changed comma to dot before addTo(map)
+        L.tileLayer('https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}.png?key=27ePJsZ0SKxvBPmjcbEx', {
+            attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+        }).addTo(map); 
+    </script>
+</body>
+
+</html>

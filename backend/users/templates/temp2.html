@@ -1,0 +1,100 @@
+{% extends "account/base_entrance.html" %}
+{% load i18n %}
+{% load account %}
+{% load socialaccount %}
+{% load static %}
+
+{% block head %}
+<title>JourneylyAI</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/temp2.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="{% static 'js/temp2.js' %}"></script>
+{% endblock head %}
+
+{% block body %}
+
+<div class="main">
+  <div class="card-1">
+    <div class="c1-nav">
+      <a href="{% url 'home' %}"><img src="{% static 'img/fav/favicon-96x96.png' %}" class="nav-logo" /></a>
+      <ul>
+        <li><a href="{% url 'home' %}">HOME</a></li>
+        <li><a href="{% url 'home' %}">CONTACT US</a></li>
+        <li><a href="{% url 'home' %}">ABOUT</a></li>
+      </ul>
+      <div class="nav-button">
+        {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}" class="nav-btn1">Plan Your Journey</a>
+        {% else %}d
+        <a href="{% url 'account_signup' %}" class="nav-btn1">Plan Your Journey</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="c1-content">
+
+    </div>
+  </div>
+  <div class="card-2">
+
+    <div class="c2-main-heading">The All In One Journey Assistant App
+    </div>
+
+    <div class="c2-sub-heading">
+
+      <div class="c2-sub-heading-item">Multi-City Weather Insights
+        <span class="c2-sub-heading-item-1" tabindex="0" aria-describedby="tip-1" role="button" title="More info">
+          i
+          <div class="c2-sub-heading-item-1-tooltip" id="tip-1" role="tooltip">
+            hwvdawiudabudi
+          </div>
+        </span>
+        <div class="c2-svg">
+          <img class="c2-svg-all" src="/static/img/card 2/global-network.png" alt="">
+        </div>
+      </div>
+
+      <div class="c2-sub-heading-item">Interactive Trip Visualization
+        <span class="c2-sub-heading-item-1" tabindex="0" aria-describedby="tip-1" role="button" title="More info">
+          i
+          <div class="c2-sub-heading-item-1-tooltip" id="tip-1" role="tooltip">
+            hwvdawiudabudi
+          </div>
+        </span>
+        <div class="c2-svg">
+          <img class="c2-svg-all" src="/static/img/card 2/visualization-of-data.png" alt="">
+        </div>
+      </div>
+
+      <div class="c2-sub-heading-item">Smart Travel Recommendations
+        <span class="c2-sub-heading-item-1" tabindex="0" aria-describedby="tip-1" role="button" title="More info">
+          i
+          <div class="c2-sub-heading-item-1-tooltip" id="tip-1" role="tooltip">
+            hwvdawiudabudi
+          </div>
+        </span>
+                <div class="c2-svg">
+          <img class="c2-svg-all" src="/static/img/card 2/airplane-travel-around-the-world.png" alt="">
+        </div>
+      </div>
+
+      <div class="c2-sub-heading-item">Cozy & Stress-Free Planning
+        <span class="c2-sub-heading-item-1" tabindex="0" aria-describedby="tip-1" role="button" title="More info">
+          i
+          <div class="c2-sub-heading-item-1-tooltip" id="tip-1" role="tooltip">
+            hwvdawiudabudi
+          </div>
+        </span>
+                <div class="c2-svg">
+          <img class="c2-svg-all" src="/static/img/card 2/map.png" alt="">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
+
+{% block script %}
+{% endblock script %}

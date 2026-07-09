@@ -1,0 +1,115 @@
+{% extends "account/base_entrance.html" %}
+{% load i18n %}
+{% load allauth %}
+{% load allauth account %}
+{% load socialaccount %}
+{% get_providers as socialaccount_providers %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/users/login-signup-style.css' %}">
+<script type="text/javascript" src="{% static 'js/login-signup-script.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+{% endblock head %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock head_title %}
+
+{% block body %}
+<div class="page">
+    <div class="container">
+
+        <div class="left">
+            <div class="back-btn"><a href="{% url 'home' %}" class="back-btn">&#8249;</a></div>
+            <div class="heading-text">{% trans "Sign In" %}</div>
+            <div class="eula">Don't Have An Account? <a href="{{ signup_url }}">Sign up</a></div>
+        </div>
+
+        <div class="middle">
+            <div class="messages">
+                {% if form.login.errors %}
+                <div class="form-error">{{ form.login.errors }}</div>
+                {% endif %}
+
+                {% if form.password.errors %}
+                <div class="form-error">{{ form.password.errors }}</div>
+                {% endif %}
+
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <div class="form-error">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <form method="post" action="{% url 'account_login' %}" class="form">
+                {% csrf_token %}
+
+                <!-- form.login field -->
+                <div class="form-field">
+                    <label for="id_login">Email</label>
+                    <input type="text" name="login" id="id_login" placeholder="Enter your email or username"
+                        autocomplete="username" maxlength="100" required>
+                </div>
+
+                <!-- form.password field -->
+                <div class="form-field">
+                    <label for="id_password">Password</label>
+                    <input type="password" name="password" id="id_password" placeholder="Enter your password"
+                        autocomplete="current-password" required>
+                </div>
+
+                {{ redirect_field }}
+
+                <div class="submit">
+                    <button type="submit" id="submit" class="super-button">
+                        <span>SIGN IN</span>
+                        <svg fill="none" viewBox="0 0 24 24" class="arrow">
+                            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor"
+                                d="M5 12h14M13 6l6 6-6 6"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="right">
+            {% if LOGIN_BY_CODE_ENABLED or PASSKEY_LOGIN_ENABLED %}
+            {% element hr %}
+            {% endelement %}
+            {% element button_group vertical=True %}
+            {% if PASSKEY_LOGIN_ENABLED %}
+            {% element button type="submit" form="mfa_login" id="passkey_login" tags="prominent,login,outline,primary"%}
+            {% trans "Sign in with a passkey" %}
+            {% endelement %}
+            {% endif %}
+            {% if LOGIN_BY_CODE_ENABLED %}
+            {% element button href=request_login_code_url tags="prominent,login,outline,primary" %}
+            {% trans "Send me a sign-in code" %}
+            {% endelement %}
+            {% endif %}
+            {% endelement %}
+            {% endif %}
+
+            <div class="form-google">
+                <h4>Or Sign in With</h4>
+                {% if SOCIALACCOUNT_ENABLED %}
+                {% load socialaccount %}
+                <div class="google-login-section">
+                    <form action="{% provider_login_url 'google' %}" method="post" class="google-login-form">
+                        {% csrf_token %}
+                        <button type="submit" class="login-with-google-btn">
+                            Sign in with Google
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+                {% endblock body %}
+                </button>
+                {% block extra_body %}
+                {% if PASSKEY_LOGIN_ENABLED %}
+                {% include "mfa/webauthn/snippets/login_script.html" with button_id="passkey_login" %}
+                {% endif %}
+                {% endblock extra_body %}
+            </div>
+        </div>
+    </div>
+</div>
