@@ -76,10 +76,8 @@ Database Setup
 2. Create a new database matching your `.env` file:
    ```sql
    CREATE DATABASE your_db_name;
-   ```
 
-### Google OAuth Setup (OPTIONAl)
-
+Google OAuth Setup (OPTIONAl)
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a new project (or select existing)
 3. Enable the **Google+ API**
