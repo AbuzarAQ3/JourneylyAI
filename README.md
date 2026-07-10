@@ -79,7 +79,6 @@ Database Setup
    ```
 
 ### Google OAuth Setup (OPTIONAl)
-
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a new project (or select existing)
 3. Enable the **Google+ API**
@@ -91,7 +90,22 @@ Database Setup
 python manage.py migrate
 
 python manage.py runserver
-The API will be live at `http://127.0.0`. You can access the DRF browsable API or the Django admin panel at `/admin/`.
+Visit `http://127.0.0` where the API will be live at. You can access the DRF browsable API or the Django admin panel at `/admin/`.
+
+### Docker Setup Build and Start the Containers
+Run the following command to download images, build the custom Django image, and start both services in detached (background) mode:
+```bash
+docker compose up --build -d
+
+docker compose exec web python manage.py migrate
+docker compose logs -f django-web # logs
+
+Visit Nginx: http://localhost:8001
+
+docker compose down # stop container
+
+```
+
 ```
 
 ---
