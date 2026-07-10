@@ -36,69 +36,76 @@ JourneylyAI is an travel planning platform that helps users create, organize, an
 
 ---
 
-## Project Structure
+## Deployment
 
-```text
-JourneylyAI/
-│── backend/
-│── media/
-│── static/
-│── templates/
-│── requirements.txt
-│── manage.py
-└── README.md
+```bash
+git clone https://github.com/AbuzarAQ3/journeylyAI.git
+cd journeylyAI
 ```
+
+### Virtual Environment
+
+```bash
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+
+# Linux / macOS
+source venv/bin/activate
+```
+
+```bash
+pip install -r requirements.txt
+```
+
+### Environment Variables
+
+Create a `.env` file in the root directory (or copy from `.env.example`) and fill in your local configuration.
+
+### Database
+
+Open your PostgreSQL client and create a database matching your `.env`:
+
+```sql
+CREATE DATABASE your_db_name;
+```
+
+### Google OAuth (Optional)
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
+2. Create or select a project
+3. Enable the Google+ API
+4. Create OAuth 2.0 credentials
+5. Add `http://localhost:8000/accounts/google/login/callback/` as a redirect URI
+6. Copy the Client ID and Secret to your `.env`
+7. Set `SOCIALACCOUNT_ENABLED = True` in your settings
+
+### Run
+
+```bash
+python manage.py migrate
+python manage.py runserver
+```
+
+Visit `http://127.0.0.1:8000` — the API is live. Browse the DRF browsable API or the Django admin at `/admin/`.
 
 ---
 
-## Deployment
+## Docker
 
-git clone https://github.com/AbuzarAQ3/journeylyAI.git
-
-cd journeylyAI
-
-python -m venv venv
-
-venv\Scripts\activate
-# Windows
-source venv/bin/activate
-# Linux(deb based)
-
-pip install -r requirements.txt
-
-Set up the Environment Variables
-
-Create a `.env` file in the root directory (or copy from `.env.example`) and add your local configuration:
-
-### Database Setup
-
-1. Open your PostgreSQL terminal or GUI tool (like pgAdmin/DBeaver).
-2. Create a new database matching your `.env` file:
-   sql
-   CREATE DATABASE your_db_name;
-
-### Google OAuth Setup (OPTIONAl)
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project (or select existing)
-3. Enable the **Google+ API**
-4. Create OAuth 2.0 credentials
-5. Add `http://localhost:8000/accounts/google/login/callback/` as a redirect URI
-6. Copy the Client ID and Secret to your `.env` file
-7. Set SOCIALACCOUNT_ENABLED = True 
-
-python manage.py migrate
-
-python manage.py runserver
-Visit `http://127.0.0` where the API will be live at. You can access the DRF browsable API or the Django admin panel at `/admin/`.
-
-### Docker Setup Build and Start the Containers
-Run the following command to download images, build the custom Django image, and start both services in detached (background) mode:
+```bash
 docker compose up --build -d
+```
 
-Visit Nginx: http://localhost:8001
+Visit **http://localhost:8001** (Nginx proxy).
 
-docker compose exec web python manage.py migrate
+### Useful Commands
+
+```bash
+docker compose exec django-web python manage.py migrate
 docker compose logs -f django-web
 docker compose down
+```
 
 ---
