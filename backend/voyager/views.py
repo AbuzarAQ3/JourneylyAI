@@ -12,4 +12,4 @@ def core_voyager(request):
         print("User: No Active Session")
 
 
-    return render(request, 'core_voyager.html')
+    return render(request, 'voyager/core_voyager.html')

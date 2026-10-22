@@ -2,8 +2,6 @@
 
 JourneylyAI is an travel planning platform that helps users create, organize, and visualize trips through an interactive planning studio. The application combines intelligent recommendations, weather foresight, and map-based itinerary planning to make travel planning simpler and more reliable.
 
-> **Status:** 🚧 Active Development
-
 ---
 
 ## Features
