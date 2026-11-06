@@ -1,0 +1,20 @@
+<!-- Itinerary Panel Component -->
+<section aria-labelledby="itinerary-heading" class="flex flex-col h-full">
+  <div class="flex items-center justify-between mb-3">
+    <div>
+      <h3 id="itinerary-heading" class="text-sm font-bold uppercase tracking-wider text-voyager-graphite">Itinerary</h3>
+      <p class="text-[11px] text-gray-500">Day-by-day destinations & activities</p>
+    </div>
+    <button type="button" data-action="open-add-destination" class="inline-flex items-center space-x-1 text-xs font-semibold text-voyager-rose hover:text-voyager-graphite transition-colors">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      <span>New Stop</span>
+    </button>
+  </div>
+
+  <!-- Day-wise activity cards container -->
+  <div id="itinerary-days-container" class="space-y-3.5 custom-scroll overflow-y-auto max-h-[calc(100vh-280px)] pr-1">
+    <!-- Rendered dynamically by VoyagerApp.renderItineraryPanel() -->
+  </div>
+</section>

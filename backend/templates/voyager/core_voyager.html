@@ -1,104 +1,159 @@
-{% extends "account/base_entrance.html" %}
-{% load i18n %}
-{% load account %}
-{% load socialaccount %}
+{% extends "allauth/layouts/base.html" %}
 {% load static %}
 
 {% block head %}
-<title>JourneylyAI</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Voyager</title>
-<link rel="stylesheet" href="{% static 'css/voyager/voyager_style.css' %}">
-<script src="{% static 'js/core_voyager.js' %}"></script>
+<title>Voyager Studio | JourneylyAI</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS via CDN with customized 6-color palette -->
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/htmx.org@1.9.10"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'voyager-white': '#FFFFFF',
+          'voyager-pink': '#FFCAD4',
+          'voyager-blue': '#B0D0D3',
+          'voyager-rose': '#C08497',
+          'voyager-graphite': '#3D3A4B',
+          'voyager-black': '#000000',
+        },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
+
+<!-- Leaflet CSS & JS (Approved mapping library) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<!-- Voyager Custom Stylesheet -->
+<link rel="stylesheet" href="{% static 'css/voyager/voyager.css' %}">
 {% endblock head %}
 
 {% block body %}
+<div class="min-h-screen flex flex-col bg-gray-50 text-voyager-black font-sans antialiased">
+  
+  <!-- Studio Header -->
+  {% include "voyager/partials/_voyager_header.html" %}
 
-<div class="main">
-  <div class="card-1">
-    <div class="c1-nav">
-      <a href="{% url 'home' %}"><img src="{% static 'img/fav/favicon-96x96.png' %}" class="nav-logo" /></a>
-      <ul>
-        <li><a href="{% url 'home' %}">HOME</a></li>
-        <li><a href="{% url 'home' %}">CONTACT US</a></li>
-        <li><a href="{% url 'home' %}">ABOUT</a></li>
-      </ul>
-      <div class="nav-button">
-        {% if user.is_authenticated %}
-        <a href="{% url 'profile' %}" class="nav-btn1">Plan Your Journey</a>
-        {% else %}d
-        <a href="{% url 'account_signup' %}" class="nav-btn1">Plan Your Journey</a>
-        {% endif %}
-      </div>
-    </div>
-    <div class="c1-content">
+  <!-- Main Viewport Area -->
+  <main class="flex-1 flex flex-col">
+    
+    <!-- Empty State View (Shown when no trip exists) -->
+    {% include "voyager/partials/_voyager_empty_state.html" %}
 
-    </div>
-  </div>
-  <div class="card-2">
-
-    <div class="c2-main-heading">The All In One Journey Assistant App
-    </div>
-
-    <div class="c2-sub-heading">
-
-      <div class="c2-sub-heading-item">Multi-City Weather Insights
-        <span class="c2-sub-heading-item-1" tabindex="0" aria-describedby="tip-1" role="button" title="More info">
-          i
-          <div class="c2-sub-heading-item-1-tooltip" id="tip-1" role="tooltip">
-            hwvdawiudabudi
+    <!-- Populated Workspace View (Shown when trip exists) -->
+    <div id="voyager-workspace" class="hidden flex-1 flex flex-col p-3 sm:p-4 lg:p-6 max-w-[1600px] w-full mx-auto">
+      
+      <!-- DESKTOP THREE-COLUMN WORKSPACE (>= 1024px) -->
+      <div class="hidden lg:grid lg:grid-cols-12 gap-5 flex-1 items-start">
+        
+        <!-- Left Panel: Trip Index + Itinerary (Col span 4) -->
+        <div class="lg:col-span-4 flex flex-col space-y-4">
+          {% include "voyager/partials/_trip_index.html" %}
+          <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-xs">
+            {% include "voyager/partials/_itinerary_panel.html" %}
           </div>
-        </span>
-        <div class="c2-svg">
-          <img class="c2-svg-all" src="/static/img/card 2/global-network.png" alt="">
         </div>
+
+        <!-- Middle Panel: Weather Foresight (Col span 3) -->
+        <div class="lg:col-span-3">
+          <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-xs">
+            {% include "voyager/partials/_weather_panel.html" %}
+          </div>
+        </div>
+
+        <!-- Right Panel: Interactive Map (Col span 5) -->
+        <div class="lg:col-span-5 h-[calc(100vh-140px)] sticky top-20">
+          <div class="bg-white border border-gray-200 rounded-xl p-3 shadow-xs h-full flex flex-col">
+            {% include "voyager/partials/_map_panel.html" %}
+          </div>
+        </div>
+
       </div>
 
-      <div class="c2-sub-heading-item">Interactive Trip Visualization
-        <span class="c2-sub-heading-item-1" tabindex="0" aria-describedby="tip-1" role="button" title="More info">
-          i
-          <div class="c2-sub-heading-item-1-tooltip" id="tip-1" role="tooltip">
-            hwvdawiudabudi
-          </div>
-        </span>
-        <div class="c2-svg">
-          <img class="c2-svg-all" src="/static/img/card 2/visualization-of-data.png" alt="">
+      <!-- TABLET & MOBILE VIEW (< 1024px) -->
+      <div class="lg:hidden flex flex-col space-y-4 flex-1">
+        
+        <!-- Mobile Map at Top -->
+        <div class="bg-white border border-gray-200 rounded-xl p-3 shadow-xs">
+          {% include "voyager/partials/_map_panel.html" %}
         </div>
-      </div>
 
-      <div class="c2-sub-heading-item">Smart Travel Recommendations
-        <span class="c2-sub-heading-item-1" tabindex="0" aria-describedby="tip-1" role="button" title="More info">
-          i
-          <div class="c2-sub-heading-item-1-tooltip" id="tip-1" role="tooltip">
-            hwvdawiudabudi
+        <!-- Tablet Split View (768px - 1023px): 50/50 two columns -->
+        <div class="hidden md:grid md:grid-cols-2 gap-4">
+          <!-- Col 1: Trip Index & Itinerary -->
+          <div class="space-y-4">
+            {% include "voyager/partials/_trip_index.html" %}
+            <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-xs">
+              {% include "voyager/partials/_itinerary_panel.html" %}
+            </div>
           </div>
-        </span>
-                <div class="c2-svg">
-          <img class="c2-svg-all" src="/static/img/card 2/airplane-travel-around-the-world.png" alt="">
-        </div>
-      </div>
 
-      <div class="c2-sub-heading-item">Cozy & Stress-Free Planning
-        <span class="c2-sub-heading-item-1" tabindex="0" aria-describedby="tip-1" role="button" title="More info">
-          i
-          <div class="c2-sub-heading-item-1-tooltip" id="tip-1" role="tooltip">
-            hwvdawiudabudi
+          <!-- Col 2: Weather -->
+          <div>
+            <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-xs">
+              {% include "voyager/partials/_weather_panel.html" %}
+            </div>
           </div>
-        </span>
-                <div class="c2-svg">
-          <img class="c2-svg-all" src="/static/img/card 2/map.png" alt="">
         </div>
+
+        <!-- Phone Tabbed View (< 768px) -->
+        <div class="md:hidden flex flex-col">
+          <!-- Mobile Tab Bar -->
+          <div class="flex border border-gray-200 rounded-xl overflow-hidden bg-white mb-3 shadow-xs">
+            <button type="button" id="tab-btn-itinerary" class="flex-1 py-2 text-center text-xs font-semibold border-b-2 border-voyager-rose text-voyager-graphite bg-white">
+              Plan & Itinerary
+            </button>
+            <button type="button" id="tab-btn-weather" class="flex-1 py-2 text-center text-xs font-medium text-gray-500 hover:text-gray-700 bg-gray-50">
+              Weather Foresight
+            </button>
+          </div>
+
+          <!-- Mobile Tab Panels -->
+          <div id="col-itinerary" class="space-y-3">
+            {% include "voyager/partials/_trip_index.html" %}
+            <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-xs">
+              {% include "voyager/partials/_itinerary_panel.html" %}
+            </div>
+          </div>
+
+          <div id="col-weather" class="hidden">
+            <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-xs">
+              {% include "voyager/partials/_weather_panel.html" %}
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </div>
-  </div>
+
+  </main>
+
+  <!-- Modal Dialogs -->
+  {% include "voyager/partials/_destination_form.html" %}
+  {% include "voyager/partials/_activity_form.html" %}
+  {% include "voyager/partials/_confirmation_dialog.html" %}
+
+  <!-- Toast Notification Feedback -->
+  {% include "voyager/partials/_toast.html" %}
+
 </div>
 
+<!-- Vanilla JavaScript Client Modules -->
+<script src="{% static 'js/voyager/voyager-fixtures.js' %}"></script>
+<script src="{% static 'js/voyager/voyager-map.js' %}"></script>
+<script src="{% static 'js/voyager/voyager.js' %}"></script>
 {% endblock body %}
-
-{% block script %}
-{% endblock script %}
