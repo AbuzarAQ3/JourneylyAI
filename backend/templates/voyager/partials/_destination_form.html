@@ -1,0 +1,88 @@
+<!-- Destination Modal Dialog -->
+<dialog id="destination-modal-dialog" closedby="any" aria-labelledby="dest-modal-title" class="rounded-2xl p-0 bg-white border border-gray-200">
+  <div class="p-6">
+    
+    <div class="flex items-center justify-between pb-3 mb-4 border-b border-gray-100">
+      <h3 id="dest-modal-title" class="text-base font-bold text-voyager-graphite">Add Destination Stop</h3>
+      <button type="button" data-action="close-dialog" class="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Close dialog">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <form id="destination-modal-form" class="space-y-4">
+      
+      <!-- Destination search & picker -->
+      <div>
+        <label for="dest-search-input" class="block text-xs font-semibold text-gray-700 mb-1">Search Destination</label>
+        <div class="relative">
+          <input type="text" id="dest-search-input" placeholder="Type city or country (e.g. Paris, Rome, Kyoto)..." class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-voyager-rose focus:border-transparent" autocomplete="off" />
+          <svg class="w-4 h-4 text-gray-400 absolute right-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+
+        <!-- Selected Feedback Box -->
+        <div id="selected-dest-display" class="hidden mt-2 p-2.5 bg-voyager-blue/20 border border-voyager-blue rounded-lg flex items-center justify-between text-xs">
+          <div>
+            <span class="text-[10px] text-gray-500 block uppercase font-semibold">Selected Location</span>
+            <span id="selected-dest-name" class="font-bold text-voyager-graphite"></span>
+          </div>
+          <span class="text-emerald-600 font-bold">✓ Ready</span>
+        </div>
+
+        <!-- Fixture Results List -->
+        <div id="dest-results-list" class="mt-2 max-h-36 overflow-y-auto custom-scroll space-y-1 pr-1 border border-gray-100 rounded-lg p-1 bg-gray-50/50">
+          <!-- Populated by VoyagerApp -->
+        </div>
+      </div>
+
+      <!-- Dates Range -->
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label for="dest-arrival-date" class="block text-xs font-semibold text-gray-700 mb-1">Arrival Date</label>
+          <input type="date" id="dest-arrival-date" required class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-voyager-rose focus:border-transparent" />
+        </div>
+        <div>
+          <label for="dest-departure-date" class="block text-xs font-semibold text-gray-700 mb-1">Departure Date</label>
+          <input type="date" id="dest-departure-date" required class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-voyager-rose focus:border-transparent" />
+        </div>
+      </div>
+
+      <!-- Optional Arrival and Departure Times with Presets -->
+      <div class="grid grid-cols-2 gap-3 pt-1">
+        <div>
+          <label for="dest-arrival-time" class="block text-xs font-semibold text-gray-700 mb-1">Arrival Time (Optional)</label>
+          <input type="time" id="dest-arrival-time" class="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-voyager-rose focus:border-transparent mb-1" />
+          <div class="flex space-x-1">
+            <button type="button" class="time-preset-btn px-1.5 py-0.5 text-[10px] bg-gray-100 hover:bg-gray-200 rounded text-gray-600" data-target-input="dest-arrival-time" data-time="09:00">09:00</button>
+            <button type="button" class="time-preset-btn px-1.5 py-0.5 text-[10px] bg-gray-100 hover:bg-gray-200 rounded text-gray-600" data-target-input="dest-arrival-time" data-time="14:00">14:00</button>
+            <button type="button" class="time-preset-btn px-1.5 py-0.5 text-[10px] bg-gray-100 hover:bg-gray-200 rounded text-gray-600" data-target-input="dest-arrival-time" data-time="18:00">18:00</button>
+          </div>
+        </div>
+
+        <div>
+          <label for="dest-departure-time" class="block text-xs font-semibold text-gray-700 mb-1">Departure Time (Optional)</label>
+          <input type="time" id="dest-departure-time" class="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-voyager-rose focus:border-transparent mb-1" />
+          <div class="flex space-x-1">
+            <button type="button" class="time-preset-btn px-1.5 py-0.5 text-[10px] bg-gray-100 hover:bg-gray-200 rounded text-gray-600" data-target-input="dest-departure-time" data-time="12:00">12:00</button>
+            <button type="button" class="time-preset-btn px-1.5 py-0.5 text-[10px] bg-gray-100 hover:bg-gray-200 rounded text-gray-600" data-target-input="dest-departure-time" data-time="17:00">17:00</button>
+            <button type="button" class="time-preset-btn px-1.5 py-0.5 text-[10px] bg-gray-100 hover:bg-gray-200 rounded text-gray-600" data-target-input="dest-departure-time" data-time="21:00">21:00</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="flex items-center justify-end space-x-2 pt-4 border-t border-gray-100">
+        <button type="button" data-action="close-dialog" class="px-4 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+          Cancel
+        </button>
+        <button type="submit" class="px-5 py-2 text-xs font-bold text-white bg-voyager-graphite hover:bg-black rounded-lg transition-colors shadow-xs">
+          Add Destination
+        </button>
+      </div>
+
+    </form>
+  </div>
+</dialog>

@@ -1,0 +1,19 @@
+<!-- Interactive Map Panel Component -->
+<section aria-labelledby="map-heading" class="flex flex-col h-full">
+  <div class="flex items-center justify-between mb-3">
+    <div>
+      <h3 id="map-heading" class="text-sm font-bold uppercase tracking-wider text-voyager-graphite">Interactive Journey Map</h3>
+      <p class="text-[11px] text-gray-500">Spatial overview & stops sequence</p>
+    </div>
+    <div class="flex items-center space-x-1.5">
+      <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-voyager-pink/40 text-voyager-graphite" title="Route connectors are illustrative sequence paths, not turn-by-turn road geometry.">
+        Illustrative Route
+      </span>
+    </div>
+  </div>
+
+  <!-- Map Container -->
+  <div class="relative flex-1 w-full min-h-[300px] md:min-h-[500px] rounded-xl overflow-hidden border border-gray-200 bg-gray-100 shadow-xs">
+    <div id="voyager-map" class="w-full h-full min-h-[300px] md:min-h-[500px]"></div>
+  </div>
+</section>

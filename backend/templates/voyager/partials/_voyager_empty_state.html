@@ -1,0 +1,97 @@
+<!-- Voyager Empty State Component -->
+<div id="voyager-empty-state" class="max-w-4xl mx-auto px-4 py-12 sm:py-16">
+  <div class="bg-white border border-gray-200 rounded-2xl p-6 sm:p-10 shadow-xs text-center">
+    
+    <!-- Cozy Icon & Badge -->
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-voyager-pink/30 text-voyager-rose mb-5">
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+      </svg>
+    </div>
+
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-voyager-graphite tracking-tight mb-2">
+      Welcome to Voyager Studio
+    </h2>
+    <p class="text-sm sm:text-base text-gray-500 max-w-lg mx-auto mb-8 leading-relaxed">
+      Your connected workspace for manual trip planning, weather foresight, and interactive route visualization.
+    </p>
+
+    <!-- Two Entry Paths -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-xl mx-auto text-left mb-8">
+      
+      <!-- Option A: Quick Start -->
+      <div class="p-5 border border-gray-200 rounded-xl hover:border-voyager-rose hover:shadow-xs transition-all bg-gray-50/50 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-voyager-rose">Option A</span>
+            <span class="text-[10px] text-gray-400">Fast Setup</span>
+          </div>
+          <h3 class="text-sm font-bold text-gray-900 mb-1">Quick Start</h3>
+          <p class="text-xs text-gray-500 mb-4 leading-relaxed">
+            Pick a destination and your travel dates to instantly establish your trip framework.
+          </p>
+        </div>
+        <button type="button" data-action="open-start-modal" class="w-full py-2.5 px-4 text-xs font-bold rounded-lg bg-voyager-graphite text-white hover:bg-black transition-colors flex items-center justify-center space-x-2">
+          <span>Start Planning</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Option B: Step by Step -->
+      <div class="p-5 border border-gray-200 rounded-xl hover:border-voyager-blue hover:shadow-xs transition-all bg-gray-50/50 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-voyager-graphite">Option B</span>
+            <span class="text-[10px] text-gray-400">Incremental</span>
+          </div>
+          <h3 class="text-sm font-bold text-gray-900 mb-1">Build Step by Step</h3>
+          <p class="text-xs text-gray-500 mb-4 leading-relaxed">
+            Add destinations, curate activities, and construct multi-stop journeys gradually.
+          </p>
+        </div>
+        <button type="button" data-action="open-start-modal" class="w-full py-2.5 px-4 text-xs font-bold rounded-lg border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2">
+          <span>Add First Destination</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Preloaded Demo Trip Option -->
+    <div class="inline-flex items-center space-x-2 text-xs text-gray-500">
+      <span>Want to see a fully populated workspace first?</span>
+      <button type="button" data-action="load-sample-trip" class="font-bold text-voyager-rose hover:text-voyager-graphite underline transition-colors">
+        Load Demo Trip (Paris & Rome)
+      </button>
+    </div>
+
+    <!-- Informational Workspace Status Notice -->
+    <div class="mt-10 pt-6 border-t border-gray-100 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+      <div class="flex items-start space-x-2.5">
+        <span class="w-2 h-2 rounded-full bg-voyager-blue mt-1.5 shrink-0"></span>
+        <div>
+          <div class="text-xs font-semibold text-gray-800">Map synchronization</div>
+          <div class="text-[11px] text-gray-400 leading-snug">Awaiting coordinates to render route and stop markers.</div>
+        </div>
+      </div>
+
+      <div class="flex items-start space-x-2.5">
+        <span class="w-2 h-2 rounded-full bg-voyager-pink mt-1.5 shrink-0"></span>
+        <div>
+          <div class="text-xs font-semibold text-gray-800">Weather foresight</div>
+          <div class="text-[11px] text-gray-400 leading-snug">Calculates daily & hourly conditions once dates are defined.</div>
+        </div>
+      </div>
+
+      <div class="flex items-start space-x-2.5">
+        <span class="w-2 h-2 rounded-full bg-voyager-rose mt-1.5 shrink-0"></span>
+        <div>
+          <div class="text-xs font-semibold text-gray-800">Trip Index</div>
+          <div class="text-[11px] text-gray-400 leading-snug">Evaluates schedule density and buffer health dynamically.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
