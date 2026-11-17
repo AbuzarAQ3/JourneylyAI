@@ -1,0 +1,51 @@
+<!-- Voyager Lists -->
+<div id="voyager-empty-state" class="max-w-4xl mx-auto px-4 py-12 sm:py-16">
+    <div class="bg-white border border-gray-200 rounded-2xl p-6 sm:p-10 shadow-xs text-center">
+
+        <!-- Cozy Icon & Badge -->
+        <div
+            class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-voyager-pink/30 text-voyager-rose mb-5">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"
+                    d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+            </svg>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-voyager-graphite tracking-tight mb-2">
+            Created Voyages
+        </h2>
+
+        {% if journeys %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-xl mx-auto text-left mb-8">
+            {% for journey in journeys %}
+            <div
+                class="p-5 border border-gray-200 rounded-xl hover:border-voyager-rose hover:shadow-xs transition-all bg-gray-50/50 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider text-voyager-rose">{{ journey.start_date}}</span>
+                        <span class="text-[10px] text-gray-400">{{ journey.end_date }}</span>
+                    </div>
+                    <h3 class="text-sm font-bold text-gray-900 mb-1">{{ journey.title }}</h3>
+                    <p class="text-xs text-gray-500 mb-4 leading-relaxed">
+                        {{ journey.description|default:"No description provided." }}
+                    </p>
+                </div>
+                <button type="button" data-action="open-start-modal"
+                    class="w-full py-2.5 px-4 text-xs font-bold rounded-lg bg-voyager-graphite text-white hover:bg-black transition-colors flex items-center justify-center space-x-2">
+                    <span>Modify</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-sm sm:text-base text-gray-500 max-w-lg mx-auto mb-8 leading-relaxed">
+            No Voyages Created
+        </p>
+        {% endif %}
+
+    </div>
+</div>

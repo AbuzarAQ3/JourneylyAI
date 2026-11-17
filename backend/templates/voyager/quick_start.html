@@ -1,0 +1,123 @@
+{% extends "voyager/base_voyager.html" %}
+
+{% block body %}
+<main class="min-h-screen bg-gray-50 px-4 py-10 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl">
+        <div class="mb-8">
+            <a href="{% url 'studio' %}"
+                class="mb-5 inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-voyager-graphite">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Voyager
+            </a>
+
+            <p class="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-voyager-rose">
+                Quick Start Mode
+            </p>
+            <h1 class="text-2xl font-extrabold tracking-tight text-voyager-graphite sm:text-3xl">
+                Let's plan your journey.
+            </h1>
+            <p class="mt-2 max-w-xl text-sm leading-relaxed text-gray-500">
+                Start with a destination and your travel dates. You can add more stops and activities once your journey
+                is created.
+            </p>
+        </div>
+
+        <section class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-8">
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
+                    {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% include "components/forms/_form_field.html" with field=form.title only %}
+
+                <div class="relative">
+                    {% include "components/forms/_form_field.html" with field=form.first_location only %}
+
+                    <div class="mt-2">
+                        <span id="location-loading" class="htmx-indicator text-xs text-gray-400">
+                            Searching destinations...
+                        </span>
+                    </div>
+
+                    <div id="location-suggestions"></div>
+                </div>
+
+                {{ form.first_latitude }}
+                {{ form.first_longitude }}
+
+                <div class="space-y-3">
+                    <div>
+                        <h2 class="text-sm font-semibold text-gray-700">Travel dates</h2>
+                        <p class="mt-0.5 text-xs text-gray-400">Choose the first and last date of your journey.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        {% include "components/forms/_form_field.html" with field=form.start_date only %}
+                        {% include "components/forms/_form_field.html" with field=form.end_date only %}
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-col-reverse gap-3 border-t border-gray-100 pt-5 sm:flex-row sm:items-center sm:justify-between">
+                    <a href="{% url 'studio' %}"
+                        class="inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-800">
+                        Cancel
+                    </a>
+
+                    <button type="submit"
+                        class="inline-flex items-center justify-center gap-2 rounded-lg bg-voyager-graphite px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-black focus:outline-none focus:ring-2 focus:ring-voyager-rose focus:ring-offset-2">
+                        Create journey
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 12h14m-7-7l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <p class="mt-5 text-center text-xs text-gray-400">
+            Your journey and first destination are saved when you submit this form.
+        </p>
+    </div>
+</main>
+<script>
+    const locationInput = document.getElementById("id_first_location");
+    const latitudeInput = document.getElementById("id_first_latitude");
+    const longitudeInput = document.getElementById("id_first_longitude");
+    const suggestionsContainer = document.getElementById("location-suggestions");
+
+    // Clear previously selected coordinates whenever the user edits the location.
+    locationInput.addEventListener("input", () => {
+        latitudeInput.value = "";
+        longitudeInput.value = "";
+
+        // Remove stale suggestions while the next search is pending.
+        suggestionsContainer.replaceChildren();
+    });
+
+    // Handle clicks on dynamically generated suggestion buttons.
+    document.addEventListener("click", (event) => {
+        const selectedPlace = event.target.closest("[data-location-result]");
+
+        if (!selectedPlace) {
+            return;
+        }
+
+        locationInput.value = selectedPlace.dataset.name;
+        latitudeInput.value = selectedPlace.dataset.latitude;
+        longitudeInput.value = selectedPlace.dataset.longitude;
+
+        // Close the suggestions.
+        suggestionsContainer.replaceChildren();
+    });
+</script>
+{% endblock body %}

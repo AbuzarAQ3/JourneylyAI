@@ -35,11 +35,10 @@ class LocationModel(models.Model):
         on_delete=models.CASCADE,
         related_name="locations"
     )
-
+    
     location = models.CharField(max_length=150)
-    address = models.CharField(max_length=250, blank=True)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
     location_type = models.CharField(
         max_length=5,
         choices=LocationType.choices,

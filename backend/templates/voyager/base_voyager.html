@@ -1,0 +1,98 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TASK PLANNER WITH AI">
+    <meta name="keywords"
+        content="Trip, Journey, Planning, Planner, Adviser, Scheduler, Location, Locations, Date, Dates, Weather, Report, AI, Artificial Intelligence, ML, Machine Learning, ">
+    <meta name="author" content="Shahabuzar Akhlaq">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;300;400;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'img/fav/favicon-96x96.png' %}" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/fav/favicon.svg' %}">
+    <link rel="shortcut icon" href="{% static 'img/fav/favicon.ico' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/fav/apple-touch-icon.png' %}">
+    <link rel="manifest" href="{% static 'img/fav/site.webmanifest' %}">
+
+    <meta name="apple-mobile-web-app-title" content="JourneylyAI" />
+    <meta name="theme-color" content="#ffffff">
+
+    {% block head %}{% endblock head %}
+
+    <title>
+        {% block head_title %}
+        JourneylyAI
+        {% endblock head_title %}
+    </title>
+    {% block extra_head %}
+    {% endblock extra_head %}
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet">
+    
+    <!-- Tailwind CSS via CDN with customized 6-color palette -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'voyager-white': '#FFFFFF',
+              'voyager-pink': '#FFCAD4',
+              'voyager-blue': '#B0D0D3',
+              'voyager-rose': '#C08497',
+              'voyager-graphite': '#3D3A4B',
+              'voyager-black': '#000000',
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- Leaflet CSS & JS (Approved mapping library) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- Voyager Custom Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/voyager/voyager.css' %}">
+</head>
+
+<div class="min-h-screen flex flex-col bg-gray-50 text-voyager-black font-sans antialiased">
+  
+  <!-- Studio Header -->
+  {% include "voyager/partials/_voyager_header.html" %}
+  
+  {% block body %}
+  {% endblock body %}
+  <!-- Modal Dialogs -->
+  {% include "voyager/partials/_activity_form.html" %}
+  {% include "voyager/partials/_confirmation_dialog.html" %}
+
+  <!-- Toast Notification Feedback -->
+  {% include "voyager/partials/_toast.html" %}
+
+</div>
+
+<!-- Vanilla JavaScript Client Modules -->
+
+
+<!-- HTMX Import -->
+<script src="{% static 'js/vendor/htmx.min.js' %}" defer></script>

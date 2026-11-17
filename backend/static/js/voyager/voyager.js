@@ -4,7 +4,7 @@
  * Trip Index calculations, dialogs, and map communication.
  */
 
-window.VoyagerApp = (function() {
+window.VoyagerApp = (function () {
   'use strict';
 
   // Application State
@@ -246,7 +246,7 @@ window.VoyagerApp = (function() {
     const assessment = calculateTripIndex();
     renderTripIndex(assessment);
     renderItineraryPanel();
-    
+
     // Find active destination and date for weather
     const currentStay = state.trip.destinations.find(d => d.id === state.selectedDestinationStayId) || state.trip.destinations[0];
     const currentDate = state.selectedDate || (currentStay ? currentStay.arrivalDate : null);
@@ -713,8 +713,8 @@ window.VoyagerApp = (function() {
 
           <div class="space-y-1.5 custom-scroll max-h-80 overflow-y-auto pr-1">
             ${weather.hourly.map(hour => {
-              const isNearestHour = isHourNearActivity(hour.time, selectedActTime);
-              return `
+      const isNearestHour = isHourNearActivity(hour.time, selectedActTime);
+      return `
                 <div class="flex items-center justify-between py-1.5 px-2.5 rounded-lg text-xs transition-colors ${isNearestHour ? 'bg-voyager-rose/15 border border-voyager-rose/40 font-semibold' : 'hover:bg-gray-50'}">
                   <span class="w-12 text-gray-600 text-[11px]">${hour.time}</span>
                   <div class="flex items-center space-x-2 flex-1 justify-center">
@@ -724,7 +724,7 @@ window.VoyagerApp = (function() {
                   <span class="w-10 text-right font-bold text-gray-900">${hour.tempC}°</span>
                 </div>
               `;
-            }).join('')}
+    }).join('')}
           </div>
         </div>
       </div>
@@ -963,7 +963,7 @@ window.VoyagerApp = (function() {
     if (!listContainer) return;
 
     const q = (query || '').toLowerCase().trim();
-    const matches = VoyagerFixtures.DESTINATIONS.filter(d => 
+    const matches = VoyagerFixtures.DESTINATIONS.filter(d =>
       d.displayName.toLowerCase().includes(q) || d.country.toLowerCase().includes(q)
     );
 
@@ -1176,7 +1176,7 @@ window.VoyagerApp = (function() {
 
   function debounce(fn, wait) {
     let timeout;
-    return function(...args) {
+    return function (...args) {
       clearTimeout(timeout);
       timeout = setTimeout(() => fn.apply(this, args), wait);
     };
@@ -1188,6 +1188,6 @@ window.VoyagerApp = (function() {
 })();
 
 // Auto-boot when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   window.VoyagerApp.init();
 });

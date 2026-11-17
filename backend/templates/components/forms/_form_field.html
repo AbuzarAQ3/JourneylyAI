@@ -1,0 +1,21 @@
+{# Reusable field renderer for Voyager forms. Pass a BoundField as `field`. #}
+<div class="space-y-1.5">
+    <label for="{{ field.id_for_label }}" class="block text-sm font-semibold text-gray-700">
+        {{ field.label }}
+        {% if field.field.required %}<span class="text-red-500" aria-hidden="true">*</span>{% endif %}
+    </label>
+
+    {{ field }}
+
+    {% if field.help_text %}
+        <p id="{{ field.auto_id }}_help" class="text-xs leading-relaxed text-gray-400">
+            {{ field.help_text }}
+        </p>
+    {% endif %}
+
+    <div id="{{ field.auto_id }}_errors" class="space-y-1" aria-live="polite">
+        {% for error in field.errors %}
+            <p class="text-xs text-red-600">{{ error }}</p>
+        {% endfor %}
+    </div>
+</div>
