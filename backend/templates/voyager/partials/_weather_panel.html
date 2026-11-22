@@ -1,23 +1,124 @@
 <!-- Weather Foresight Panel Component -->
 <section aria-labelledby="weather-heading" class="flex flex-col h-full">
+  <!-- Panel Header -->
   <div class="flex items-center justify-between mb-3">
     <div>
-      <h3 id="weather-heading" class="text-sm font-bold uppercase tracking-wider text-voyager-graphite">Weather Foresight</h3>
+      <h3 id="weather-heading" class="text-sm font-bold uppercase tracking-wider text-voyager-graphite">
+        Weather Foresight
+      </h3>
       <p class="text-[11px] text-gray-500">Destination forecast & hourly alignment</p>
     </div>
-    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-600">
-      Simulated Data
+
+    {% if weather %}
+    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-voyager-blue/30 text-voyager-graphite">
+      Open-Meteo
     </span>
+    {% else %}
+    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-500">
+      Awaiting Selection
+    </span>
+    {% endif %}
   </div>
 
-  <div id="weather-panel-content" class="custom-scroll overflow-y-auto max-h-[calc(100vh-210px)] pr-1">
-    <!-- Rendered dynamically by VoyagerApp.renderWeatherPanel() -->
-    <div class="h-64 flex flex-col items-center justify-center p-6 text-center text-gray-400">
-      <svg class="w-10 h-10 mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z" />
-      </svg>
-      <p class="text-xs font-semibold text-gray-600">Select an itinerary day</p>
-      <p class="text-[11px] text-gray-400 mt-1">Weather foresight updates automatically based on the chosen destination and date.</p>
+  <!-- Main Weather Container -->
+  <div id="weather-panel-container" class="flex-1 flex flex-col">
+    {% if weather %}
+    <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-xs flex flex-col justify-between space-y-4">
+      
+      <!-- Daily Overview Card -->
+      <div class="p-3.5 rounded-xl bg-gradient-to-br from-voyager-blue/20 via-white to-voyager-pink/20 border border-voyager-blue/40">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-voyager-rose">
+              {{ weather.date|date:"D, M j, Y" }}
+            </span>
+            <h4 class="text-base font-extrabold text-voyager-graphite mt-0.5">
+              {{ weather.location.location }}
+            </h4>
+          </div>
+
+          <div class="text-right">
+            <div class="text-2xl font-black text-voyager-graphite leading-none">
+              {{ weather.temp_max|floatformat:0 }}°C
+            </div>
+            <div class="text-[11px] font-medium text-gray-500 mt-1">
+              Low: {{ weather.temp_min|floatformat:0 }}°C
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Metrics Pills -->
+        <div class="grid grid-cols-2 gap-2 mt-3.5 pt-3 border-t border-gray-200/70 text-xs">
+          <div class="flex items-center space-x-1.5 text-voyager-graphite">
+            <span class="w-2 h-2 rounded-full bg-voyager-blue shrink-0"></span>
+            <span class="text-gray-500">Rain Chance:</span>
+            <span class="font-bold">{{ weather.precipitation_prob|default:"0" }}%</span>
+          </div>
+
+          <div class="flex items-center space-x-1.5 text-voyager-graphite">
+            <span class="w-2 h-2 rounded-full bg-voyager-rose shrink-0"></span>
+            <span class="text-gray-500">Max Wind:</span>
+            <span class="font-bold">{{ weather.wind_speed_max|floatformat:0|default:"0" }} km/h</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hourly Timeline Breakdown -->
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <h5 class="text-xs font-bold uppercase tracking-wider text-voyager-graphite">
+            Hourly Breakdown
+          </h5>
+          <span class="text-[11px] text-gray-400">Local Time</span>
+        </div>
+
+        <div class="space-y-1.5 max-h-[260px] overflow-y-auto custom-scroll pr-1">
+          {% for hour in weather.hourly_data %}
+          <div class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50/80 hover:bg-voyager-pink/15 border border-gray-100 transition-colors text-xs">
+            <div class="flex items-center space-x-3">
+              <span class="font-bold text-voyager-graphite w-11">
+                {{ hour.time|slice:"11:16" }}
+              </span>
+              <span class="text-gray-500 text-[11px]">
+                Feels {{ hour.apparent_temperature|floatformat:0 }}°
+              </span>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              {% if hour.precipitation_probability > 0 %}
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-voyager-blue/30 text-voyager-graphite">
+                💧 {{ hour.precipitation_probability }}%
+              </span>
+              {% endif %}
+
+              <span class="font-extrabold text-voyager-graphite w-10 text-right">
+                {{ hour.temperature_2m|floatformat:0 }}°C
+              </span>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-xs text-gray-400 text-center py-4">
+            Hourly breakdown unavailable for this date.
+          </p>
+          {% endfor %}
+        </div>
+      </div>
+
     </div>
+    {% else %}
+    <!-- Clean Empty / Unselected State -->
+    <div class="flex-1 bg-white border border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center text-center min-h-[240px]">
+      <div class="w-10 h-10 rounded-xl bg-voyager-blue/25 text-voyager-graphite flex items-center justify-center mb-3">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"
+            d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+        </svg>
+      </div>
+      <h4 class="text-sm font-bold text-voyager-graphite">Select a Destination Stop</h4>
+      <p class="text-xs text-gray-400 max-w-xs mt-1 leading-relaxed">
+        Click any stop in your itinerary to view daily and hourly weather foresight for your stay.
+      </p>
+    </div>
+    {% endif %}
   </div>
 </section>

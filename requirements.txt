@@ -8,7 +8,7 @@ Django==5.2.5
 django-allauth==65.11.1
 django-autoslug==1.9.9
 django-filter==25.2
-djangorestframework==3.17.1
+django-widget-tweaks==1.5.1
 gunicorn==26.0.0
 idna==3.10
 packaging==26.2

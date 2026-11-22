@@ -12,12 +12,6 @@
         content="Trip, Journey, Planning, Planner, Adviser, Scheduler, Location, Locations, Date, Dates, Weather, Report, AI, Artificial Intelligence, ML, Machine Learning, ">
     <meta name="author" content="Shahabuzar Akhlaq">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;300;400;600;700;900&display=swap"
-        rel="stylesheet">
-
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{% static 'img/fav/favicon-96x96.png' %}" sizes="96x96">
     <link rel="icon" type="image/svg+xml" href="{% static 'img/fav/favicon.svg' %}">
@@ -28,21 +22,31 @@
     <meta name="apple-mobile-web-app-title" content="JourneylyAI" />
     <meta name="theme-color" content="#ffffff">
 
-    {% block head %}{% endblock head %}
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    {% block head %}
+    {% endblock head %}
 
     <title>
         {% block head_title %}
         JourneylyAI
         {% endblock head_title %}
     </title>
+
     {% block extra_head %}
     {% endblock extra_head %}
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet">
-    
+
+    <!-- Voyager Custom Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/voyager/voyager.css' %}">
+    <!-- voyager map css -->
+    <link rel="stylesheet" href="{% static 'css/voyager/voyager_studio_map.css' %}">
+
+    <script src="{% static 'js/voyager/voyager_studio_map.js' %}" defer></script>
+
     <!-- Tailwind CSS via CDN with customized 6-color palette -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -65,16 +69,18 @@
       }
     </script>
     
-    <!-- Leaflet CSS & JS (Approved mapping library) -->
+    <!-- Leaflet CSS & JS (mapping library) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    
-    <!-- Voyager Custom Stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/voyager/voyager.css' %}">
+  
+    <!-- HTMX Import -->
+    <script src="{% static 'js/vendor/htmx.min.js' %}" defer></script>
+
 </head>
 
+<body>
 <div class="min-h-screen flex flex-col bg-gray-50 text-voyager-black font-sans antialiased">
   
   <!-- Studio Header -->
@@ -83,16 +89,61 @@
   {% block body %}
   {% endblock body %}
   <!-- Modal Dialogs -->
-  {% include "voyager/partials/_activity_form.html" %}
-  {% include "voyager/partials/_confirmation_dialog.html" %}
 
+  {% include "voyager/partials/_confirmation_dialog.html" %}
+  {% include "voyager/partials/_destination_form.html" %}
   <!-- Toast Notification Feedback -->
   {% include "voyager/partials/_toast.html" %}
 
 </div>
+</body>
 
-<!-- Vanilla JavaScript Client Modules -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const destDialog = document.getElementById("destination-modal-dialog");
+    const destForm = document.getElementById("destination-modal-form");
 
+    if (!destDialog) return;
 
-<!-- HTMX Import -->
-<script src="{% static 'js/vendor/htmx.min.js' %}" defer></script>
+    // 1. Open modal when clicking any "New Stop" / "Add First Destination" button
+    document.addEventListener("click", (e) => {
+      const openBtn = e.target.closest('[data-action="open-add-destination"]');
+      if (openBtn) {
+        destDialog.showModal();
+      }
+
+      // 2. Close modal when clicking "Cancel" or the "X" icon
+      const closeBtn = e.target.closest('[data-action="close-dialog"]');
+      if (closeBtn) {
+        const parentDialog = closeBtn.closest("dialog");
+        if (parentDialog) parentDialog.close();
+      }
+
+      // 3. Handle time preset buttons (09:00, 14:00, etc.)
+      const presetBtn = e.target.closest(".time-preset-btn");
+      if (presetBtn) {
+        const targetInput = document.getElementById(presetBtn.dataset.targetInput);
+        if (targetInput) targetInput.value = presetBtn.dataset.time;
+      }
+    });
+
+    // 4. Close when clicking the dark backdrop outside the modal box
+    destDialog.addEventListener("click", (e) => {
+      const rect = destDialog.getBoundingClientRect();
+      const clickedOutside =
+        e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top ||
+        e.clientY > rect.bottom;
+
+      if (clickedOutside) {
+        destDialog.close();
+      }
+    });
+
+    // 5. Reset form inputs cleanly whenever the dialog closes
+    destDialog.addEventListener("close", () => {
+      if (destForm) destForm.reset();
+    });
+  });
+</script>

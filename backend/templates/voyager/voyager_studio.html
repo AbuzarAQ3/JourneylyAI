@@ -2,12 +2,12 @@
 {% block body %}
   <!-- Main Viewport Area -->
   <main class="flex-1 flex flex-col">
-
+{{ locations_data|json_script:"journey-locations-data" }}
     <!-- Populated Workspace View (Shown when trip exists) -->
     <div id="voyager-workspace" class=" flex-1 flex flex-col p-3 sm:p-4 lg:p-6 max-w-[1600px] w-full mx-auto">
 
       <!-- DESKTOP THREE-COLUMN WORKSPACE (>= 1024px) -->
-      <div class="hiden lg:grid lg:grid-cols-12 gap-5 flex-1 items-start">
+      <div class="hidden lg:grid lg:grid-cols-12 gap-5 flex-1 items-start">
 
         <!-- Left Panel: Trip Index + Itinerary (Col span 4) -->
         <div class="lg:col-span-4 flex flex-col space-y-4">

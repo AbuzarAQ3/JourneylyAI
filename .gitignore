@@ -35,7 +35,10 @@ pip-delete-this-directory.txt
 *.swo
 .DS_Store
 
-# Frontend (if you have React/Vue in same repo)
+# ckcoding agents
+.kilo/
+
+# Frontend
 node_modules/
 npm-debug.log
 yarn-debug.log
