@@ -1,0 +1,46 @@
+{% if search_error %}
+
+    <div class="mt-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
+        Location search is temporarily unavailable. Please try again.
+    </div>
+
+{% elif places %}
+
+    <div class="mt-2 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg">
+        <ul role="listbox" aria-label="Location suggestions">
+
+            {% for place in places %}
+
+                <li>
+                    <button
+                        type="button"
+                        role="option"
+                        aria-selected="false"
+                        data-location-result
+                        data-name="{{ place.name }}"
+                        data-latitude="{{ place.latitude }}"
+                        data-longitude="{{ place.longitude }}"
+                        class="w-full px-4 py-3 text-left text-sm transition-colors hover:bg-gray-50 focus:bg-gray-50 focus:outline-none"
+                    >
+                        <span class="block font-medium text-gray-800">
+                            {{ place.name }}
+                        </span>
+
+                        <span class="mt-1 block text-xs text-gray-400">
+                            Select this destination
+                        </span>
+                    </button>
+                </li>
+
+            {% endfor %}
+
+        </ul>
+    </div>
+
+{% elif query|length >= 3 %}
+
+    <div class="mt-2 rounded-lg bg-gray-50 px-3 py-3 text-sm text-gray-500">
+        No matching destinations found.
+    </div>
+
+{% endif %}

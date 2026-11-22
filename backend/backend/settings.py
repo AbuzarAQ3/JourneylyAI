@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from pathlib import Path
 from dotenv import load_dotenv
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -93,8 +94,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'rest_framework',
     'django_filters',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -173,7 +174,7 @@ SITE_ID = 1
 ACCOUNT_AUTHENTICATION_REQUIRED = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-LOGIN_REDIRECT_URL = 'voyager'
+LOGIN_REDIRECT_URL = 'entrypoint'
 LOGOUT_REDIRECT_URL = '/'
 
 AUTHENTICATION_BACKENDS = [
@@ -202,9 +203,9 @@ if GOOGLE_OAUTH_ENABLED:
         'AUTH_PARAMS': {'access_type': 'online'},
     }
 
-# restframework configuration
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 2,
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
-}
+# api keys
+MAPTILER_MAP_KEY = os.getenv('MAPTILER_MAP_KEY')
+MAPTILER_GEOCODING_KEY = os.getenv('MAPTILER_GEOCODING_KEY')
+
+if not MAPTILER_GEOCODING_KEY and not DEBUG:
+    raise ImproperlyConfigured("The MAPTILER_GEOCODING_KEY environment variable is mandatory in production.")

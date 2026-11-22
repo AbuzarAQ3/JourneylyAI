@@ -35,7 +35,7 @@
                         <a href="#about"
                             class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">About</a>
                         {% if user.is_authenticated %}
-                        <a href="{% url 'voyager' %}"
+                        <a href="{% url 'studio' %}"
                             class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">Plan
                             Your Journey</a>
                         {% else %}
@@ -70,7 +70,7 @@
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
                         {% if user.is_authenticated %}
-                        <a href="{% url 'voyager' %}"
+                        <a href="{% url 'studio' %}"
                             class="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors cozy-shadow">Continue
                             To Your Studio</a>
                         {% else %}
@@ -255,7 +255,7 @@
                             </li>
                         </ul>
                         {% if user.is_authenticated %}
-                        <a href="{% url 'voyager' %}"
+                        <a href="{% url 'studio' %}"
                             class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">Try
                             It Yourself</a>
                         {% else %}
