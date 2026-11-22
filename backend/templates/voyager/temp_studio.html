@@ -1,0 +1,159 @@
+
+{% load static %}
+
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voyager Studio | JourneylyAI</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS via CDN with customized 6-color palette -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'voyager-white': '#FFFFFF',
+          'voyager-pink': '#FFCAD4',
+          'voyager-blue': '#B0D0D3',
+          'voyager-rose': '#C08497',
+          'voyager-graphite': '#3D3A4B',
+          'voyager-black': '#000000',
+        },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
+
+<!-- Leaflet CSS & JS (Approved mapping library) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<!-- Voyager Custom Stylesheet -->
+<link rel="stylesheet" href="{% static 'css/voyager/voyager.css' %}">
+{% endblock head %}
+
+{% block body %}
+<div class="min-h-screen flex flex-col bg-gray-50 text-voyager-black font-sans antialiased">
+  
+  <!-- Studio Header -->
+  {% include "voyager/partials/_voyager_header.html" %}
+
+  <!-- Main Viewport Area -->
+  <main class="flex-1 flex flex-col">
+    
+    <!-- Empty State View (Shown when no trip exists) -->
+    {% include "voyager/partials/_voyager_empty_state.html" %}
+
+    <!-- Populated Workspace View (Shown when trip exists) -->
+    <div id="voyager-workspace" class="hidden flex-1 flex flex-col p-3 sm:p-4 lg:p-6 max-w-[1600px] w-full mx-auto">
+      
+      <!-- DESKTOP THREE-COLUMN WORKSPACE (>= 1024px) -->
+      <div class="hidden lg:grid lg:grid-cols-12 gap-5 flex-1 items-start">
+        
+        <!-- Left Panel: Trip Index + Itinerary (Col span 4) -->
+        <div class="lg:col-span-4 flex flex-col space-y-4">
+          {% include "voyager/partials/_trip_index.html" %}
+          <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-xs">
+            {% include "voyager/partials/_itinerary_panel.html" %}
+          </div>
+        </div>
+
+        <!-- Middle Panel: Weather Foresight (Col span 3) -->
+        <div class="lg:col-span-3">
+          <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-xs">
+            {% include "voyager/partials/_weather_panel.html" %}
+          </div>
+        </div>
+
+        <!-- Right Panel: Interactive Map (Col span 5) -->
+        <div class="lg:col-span-5 h-[calc(100vh-140px)] sticky top-20">
+          <div class="bg-white border border-gray-200 rounded-xl p-3 shadow-xs h-full flex flex-col">
+            {% include "voyager/partials/_map_panel.html" %}
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TABLET & MOBILE VIEW (< 1024px) -->
+      <div class="lg:hidden flex flex-col space-y-4 flex-1">
+        
+        <!-- Mobile Map at Top -->
+        <div class="bg-white border border-gray-200 rounded-xl p-3 shadow-xs">
+          {% include "voyager/partials/_map_panel.html" %}
+        </div>
+
+        <!-- Tablet Split View (768px - 1023px): 50/50 two columns -->
+        <div class="hidden md:grid md:grid-cols-2 gap-4">
+          <!-- Col 1: Trip Index & Itinerary -->
+          <div class="space-y-4">
+            {% include "voyager/partials/_trip_index.html" %}
+            <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-xs">
+              {% include "voyager/partials/_itinerary_panel.html" %}
+            </div>
+          </div>
+
+          <!-- Col 2: Weather -->
+          <div>
+            <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-xs">
+              {% include "voyager/partials/_weather_panel.html" %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Phone Tabbed View (< 768px) -->
+        <div class="md:hidden flex flex-col">
+          <!-- Mobile Tab Bar -->
+          <div class="flex border border-gray-200 rounded-xl overflow-hidden bg-white mb-3 shadow-xs">
+            <button type="button" id="tab-btn-itinerary" class="flex-1 py-2 text-center text-xs font-semibold border-b-2 border-voyager-rose text-voyager-graphite bg-white">
+              Plan & Itinerary
+            </button>
+            <button type="button" id="tab-btn-weather" class="flex-1 py-2 text-center text-xs font-medium text-gray-500 hover:text-gray-700 bg-gray-50">
+              Weather Foresight
+            </button>
+          </div>
+
+          <!-- Mobile Tab Panels -->
+          <div id="col-itinerary" class="space-y-3">
+            {% include "voyager/partials/_trip_index.html" %}
+            <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-xs">
+              {% include "voyager/partials/_itinerary_panel.html" %}
+            </div>
+          </div>
+
+          <div id="col-weather" class="hidden">
+            <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-xs">
+              {% include "voyager/partials/_weather_panel.html" %}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Modal Dialogs -->
+  {% include "voyager/partials/_destination_form.html" %}
+  {% include "voyager/partials/_activity_form.html" %}
+  {% include "voyager/partials/_confirmation_dialog.html" %}
+
+  <!-- Toast Notification Feedback -->
+  {% include "voyager/partials/_toast.html" %}
+
+</div>
+
+<!-- Vanilla JavaScript Client Modules -->
+<script src="{% static 'js/voyager/voyager-fixtures.js' %}"></script>
+<script src="{% static 'js/voyager/voyager-map.js' %}"></script>
+<script src="{% static 'js/voyager/voyager.js' %}"></script>
+{% endblock body %}

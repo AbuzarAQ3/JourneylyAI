@@ -1,7 +1,29 @@
 from django import forms
 from django.urls import reverse
-from .models import JourneyModel
+from datetime import datetime
+from django.core.exceptions import ValidationError
 
+from ..models import JourneyModel
+
+class LocalDateTimeField(forms.Field):
+    """
+    Parses datetime-local input without applying Django's
+    project timezone. The destination timezone is applied later.
+    """
+    widget = forms.DateTimeInput(
+        format="%Y-%m-%dT%H:%M",
+        attrs={"type": "datetime-local"},
+    )
+    
+    def to_python(self, value):
+        if not value:
+            return None
+
+        try:
+            return datetime.strptime(value, "%Y-%m-%dT%H:%M")
+        except ValueError:
+            raise ValidationError("Enter a valid date and time.")
+        
 # voyager_studio: Quick Start Form
 class QuickStartForm(forms.ModelForm):
 
@@ -45,6 +67,42 @@ class QuickStartForm(forms.ModelForm):
         widget=forms.HiddenInput(),
     )
 
+    DATETIME_INPUT_CLASSES = (
+        "w-full rounded-lg border border-gray-300 "
+        "bg-white px-3.5 py-2.5 text-xs font-light text-voyager-graphite"
+        "outline-none transition "
+        "focus:border-voyager-rose "
+        "focus:ring-2 focus:ring-voyager-rose/20 "
+        "aria-[invalid=true]:border-red-500"
+    )
+
+
+    first_arrival_at = forms.DateTimeField(
+        required=True,
+        label="Arrival at",
+        input_formats=["%Y-%m-%dT%H:%M"],
+        widget=forms.DateTimeInput(
+            format="%Y-%m-%dT%H:%M",
+            attrs={
+                "type": "datetime-local",
+                "class": DATETIME_INPUT_CLASSES,
+            },
+        ),
+    )
+
+    first_departure_at = forms.DateTimeField(
+        required=True,
+        label="Departure at",
+        input_formats=["%Y-%m-%dT%H:%M"],
+        widget=forms.DateTimeInput(
+            format="%Y-%m-%dT%H:%M",
+            attrs={
+                "type": "datetime-local",
+                "class": DATETIME_INPUT_CLASSES,
+            },
+        ),
+    )
+
     title = forms.CharField(
         max_length=100,
         required=False,
@@ -83,80 +141,32 @@ class QuickStartForm(forms.ModelForm):
 
     class Meta:
         model = JourneyModel
-        fields = [
-            "title",
-            "start_date",
-            "end_date",
-        ]
-        labels = {
-            "start_date": "Start date",
-            "end_date": "End date",
-        }
-        help_texts = {
-            "start_date": "When does your journey begin?",
-            "end_date": "When does your journey end?",
-        }
-        widgets = {
-            "start_date": forms.DateInput(
-                format="%Y-%m-%d",
-                attrs={
-                    "type": "date",
-                    "class": (
-                        "w-full rounded-lg border border-gray-300 "
-                        "bg-white px-3 py-2.5 text-sm text-gray-900 "
-                        "outline-none transition "
-                        "focus:border-voyager-rose "
-                        "focus:ring-2 focus:ring-voyager-rose/20 "
-                        "aria-[invalid=true]:border-red-500"
-                    ),
-                    "aria-describedby": (
-                        "id_start_date_help id_start_date_errors"
-                    ),
-                }
-            ),
-
-            "end_date": forms.DateInput(
-                format="%Y-%m-%d",
-                attrs={
-                    "type": "date",
-                    "class": (
-                        "w-full rounded-lg border border-gray-300 "
-                        "bg-white px-3 py-2.5 text-sm text-gray-900 "
-                        "outline-none transition "
-                        "focus:border-voyager-rose "
-                        "focus:ring-2 focus:ring-voyager-rose/20 "
-                        "aria-[invalid=true]:border-red-500"
-                    ),
-                    "aria-describedby": (
-                        "id_end_date_help id_end_date_errors"
-                    ),
-                }
-            ),
-        }
-
+        fields = ["title",]
+        
     def clean_title(self):
         title = self.cleaned_data.get("title", "").strip()
         return title or "Untitled"
 
     def clean(self):
         cleaned_data = super().clean()
-        start_date = cleaned_data.get("start_date")
-        end_date = cleaned_data.get("end_date")
-        if start_date and end_date:
-            if end_date < start_date:
-                self.add_error(
-                    "end_date",
-                    "Journey's ending date cannot be earlier than starting date."
-                )
                 
-        first_location = cleaned_data.get("first_location")
+        location = cleaned_data.get("first_location")
         latitude = cleaned_data.get("first_latitude")
         longitude = cleaned_data.get("first_longitude")
+        
+        arrival = cleaned_data.get("first_arrival_at")
+        departure = cleaned_data.get("first_departure_at")
 
-        if first_location and (latitude is None or longitude is None):
+        if location and (latitude is None or longitude is None):
             self.add_error(
                 "first_location",
-                "Please select a destination from the search suggestions."
+                "Select a destination from the suggestions."
+            )
+
+        if arrival and departure and departure <= arrival:
+            self.add_error(
+                "first_departure_at",
+                "Departure must be after arrival."
             )
 
         return cleaned_data

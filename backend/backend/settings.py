@@ -172,7 +172,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # allauth configuration
 SITE_ID = 1
 ACCOUNT_AUTHENTICATION_REQUIRED = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LOGIN_REDIRECT_URL = 'entrypoint'
 LOGOUT_REDIRECT_URL = '/'

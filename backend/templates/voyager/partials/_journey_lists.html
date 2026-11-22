@@ -1,0 +1,54 @@
+<div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-xs">
+    <div class="flex items-center justify-between pb-4 mb-4 border-b border-gray-100">
+        <h2 class="text-base font-extrabold text-voyager-graphite tracking-tight">
+            Created Voyages
+        </h2>
+        {% if journeys %}
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-voyager-pink/30 text-voyager-rose">
+            {{ journeys|length }}
+        </span>
+        {% endif %}
+    </div>
+
+    {% if journeys %}
+    <div class="space-y-3 max-h-[calc(100vh-220px)] overflow-y-auto pr-1">
+        {% for journey in journeys %}
+        <div class="p-4 border border-gray-200 rounded-xl hover:border-voyager-rose hover:shadow-xs transition-all bg-gray-50/50 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2 mb-1.5">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-voyager-rose">
+                        {{ journey.start_date }}
+                    </span>
+                    <span class="text-[11px] text-gray-400">
+                        {{ journey.end_date }}
+                    </span>
+                </div>
+
+                <h3 class="text-sm font-bold text-voyager-graphite mb-1 truncate">
+                    {{ journey.title }}
+                </h3>
+
+                <p class="text-xs text-gray-500 mb-3 leading-relaxed line-clamp-2">
+                    {{ journey.description|default:"No description provided." }}
+                </p>
+            </div>
+
+            <a href="{% url 'studio' pk=journey.id %}"
+                class="w-full py-2 px-3 text-xs font-bold rounded-lg bg-voyager-graphite text-white hover:bg-black transition-colors flex items-center justify-center space-x-1.5">
+                <span>Continue</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="py-10 text-center border border-dashed border-gray-200 rounded-xl bg-gray-50/40">
+        <p class="text-xs font-medium text-gray-500">
+            No Voyages Created
+        </p>
+    </div>
+    {% endif %}
+</div>

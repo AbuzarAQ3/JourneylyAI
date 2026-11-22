@@ -4,7 +4,7 @@
 <main class="min-h-screen bg-gray-50 px-4 py-10 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-2xl">
         <div class="mb-8">
-            <a href="{% url 'studio' %}"
+            <a href="{% url 'entrypoint' %}"
                 class="mb-5 inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-voyager-graphite">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -56,18 +56,18 @@
                 <div class="space-y-3">
                     <div>
                         <h2 class="text-sm font-semibold text-gray-700">Travel dates</h2>
-                        <p class="mt-0.5 text-xs text-gray-400">Choose the first and last date of your journey.</p>
+                        <p class="mt-0.5 text-xs text-gray-400">Choose the first and last date of your for the selected destination.</p>
                     </div>
 
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                        {% include "components/forms/_form_field.html" with field=form.start_date only %}
-                        {% include "components/forms/_form_field.html" with field=form.end_date only %}
+                        {% include "components/forms/_form_field.html" with field=form.first_arrival_at only %}
+                        {% include "components/forms/_form_field.html" with field=form.first_departure_at only %}
                     </div>
                 </div>
 
                 <div
                     class="flex flex-col-reverse gap-3 border-t border-gray-100 pt-5 sm:flex-row sm:items-center sm:justify-between">
-                    <a href="{% url 'studio' %}"
+                    <a href="{% url 'entrypoint' %}"
                         class="inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-800">
                         Cancel
                     </a>
@@ -89,6 +89,7 @@
         </p>
     </div>
 </main>
+
 <script>
     const locationInput = document.getElementById("id_first_location");
     const latitudeInput = document.getElementById("id_first_latitude");
